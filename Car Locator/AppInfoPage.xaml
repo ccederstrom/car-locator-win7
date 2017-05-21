@@ -1,0 +1,167 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Car_Locator.AppInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    toolkit:TiltEffect.IsTiltEnabled="True" xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI" Loaded="PhoneApplicationPage_Loaded">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot  Name="MainPivot" Title="INFO PAGE">
+            <!--HELP-->
+            <controls:PivotItem Header="help">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!--ContentPanel - place additional content here-->
+
+                    <ScrollViewer Name="svHelp" Margin="13,0,0,633" Height="521" Width="443">
+                        <StackPanel>
+                            <TextBlock Height="Auto" HorizontalAlignment="Stretch" Text="Background service must be enabled for features to work when application is closed. Background services run once every 15 minutes." Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="22.667" TextWrapping="Wrap" />
+                            
+                            <TextBlock Height="Auto" Width="Auto" Text="Car Locator" VerticalAlignment="Top"  HorizontalAlignment="Stretch" FontSize="26"  />
+                            <TextBlock Height="Auto" HorizontalAlignment="Stretch" Text="This will find the shortest path to your car. Once a location for your car has been created, open the menu and press 'Direction' to show turn by turn navigation. To see where your car is in real life, click Agrument Reality" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="22.667" TextWrapping="Wrap" /> 
+                            <TextBlock Height="Auto" Width="Auto" Text="Privacy Policy" VerticalAlignment="Top"  HorizontalAlignment="Stretch" FontSize="26"  />
+                            <TextBlock Height="Auto" HorizontalAlignment="Stretch" Text="Application requires GPS in order to display and track your location on the map. We dont store your location data. It can be used for more relevant ads. You can always switch it off at the application settings page. Location data can be share by the user through email, sms, and social services" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="22.667" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </ScrollViewer>
+                    <!--<Button Content="Help Support Development" Height="Auto" HorizontalAlignment="Stretch" Margin="0" Name="btnBuyApp" VerticalAlignment="Bottom" Width="Auto" Click="btnBuyApp_Click" />-->
+                </Grid>
+            </controls:PivotItem>
+            <!--Pivot item ABOUT-->
+            <controls:PivotItem Header="about">
+                <Grid VerticalAlignment="Top">
+                    <ScrollViewer Name="AboutScrollViewer" Margin="12,0,0,0" VerticalContentAlignment="Top" Height="454">
+                        <StackPanel>
+                            <TextBlock Height="Auto" Width="Auto" Text="Application Title" VerticalAlignment="Top"  Foreground="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Stretch" Name="txtAppName"  FontSize="22.667" />
+                            <!--<TextBlock Height="Auto" HorizontalAlignment="Stretch" Name="txtVersion" Text="Version" VerticalAlignment="Top" FontSize="22.667" />-->
+                            <TextBlock Height="Auto" Width="Auto" Text="Description" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  Name="txtDescription"  TextWrapping="Wrap" FontSize="22.667" Margin="0,10,0,0" />
+                            <!--<HyperlinkButton Content="Get the pro version thats ad free!" HorizontalContentAlignment="Left" />-->
+                            <TextBlock Height="Auto" HorizontalAlignment="Stretch" Text="Developed by" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="22.667" />
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.people.png" x:Name="chris_people"/>
+                                <TextBlock Height="Auto" HorizontalAlignment="Stretch" Text="Chris Cederstrom" VerticalAlignment="Center" FontSize="22.667" />
+                            </StackPanel>
+                            <!--<StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.gotoaddressbar.rest.png" x:Name="chris_goto" />
+                                <HyperlinkButton Content="ccederstrom.com" NavigateUri="" HorizontalContentAlignment="Left" />
+                            </StackPanel>-->
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.twitter.bird.png" x:Name="chris_twitter"/>
+                                <HyperlinkButton Content="@cederstr" NavigateUri="http://twitter.com/cederstr" HorizontalContentAlignment="Left" TargetName="_blank" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.people.png" x:Name="hung_people"/>
+                                <TextBlock Height="30" HorizontalAlignment="Stretch" Text="Hung Nguyen" VerticalAlignment="Center" FontSize="22.667" />
+                            </StackPanel>
+                            <!--<StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.gotoaddressbar.rest.png" x:Name="hung_goto"/>
+
+                                <HyperlinkButton Content="nguyen.com" NavigateUri="" HorizontalContentAlignment="Left" />
+                            </StackPanel>-->
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/AppInfo/Images/About/Dark/appbar.twitter.bird.png" x:Name="hung_twitter"/>
+                                <HyperlinkButton Content="@loseover4" NavigateUri="https://twitter.com/#!/loseover4" HorizontalContentAlignment="Left" TargetName="_blank" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Height="Auto" Width="Auto" Text="Version History" VerticalAlignment="Top"  HorizontalAlignment="Stretch" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" FontSize="22.667" Margin="0,10,0,0" />
+                                <ListBox Name="VersionHistoryListBox" Height="220">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <StackPanel Margin="12,0,0,0">
+                                                    <TextBlock Text="{Binding VersionNumber}" TextWrapping="Wrap" Margin="0,0,0,0"  />
+                                                    <TextBlock Text="{Binding Detail}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </controls:PivotItem>
+            <!--Pivot item HELP-->
+            <!--<controls:PivotItem Header="tips">
+                <Grid VerticalAlignment="Top">
+                    <ScrollViewer Name="HelpScrollViewer" Margin="12,0,0,0" VerticalContentAlignment="Top" VerticalAlignment="Stretch" Height="454">
+                        <StackPanel>
+                            <TextBlock Name="txtHelp" Text="Check " FontSize="22.667" TextWrapping="Wrap" />
+                            <TextBlock Text="Directions:"  FontSize="26" TextWrapping="Wrap" Margin="0,10,0,0"  Foreground="{StaticResource PhoneAccentBrush}" />
+                            <TextBlock Name="txtDirections" Text="Enter an IP address and select the type of option to mask it with. Results will be displayed in IPv4 and binary. aslkdjflksd asldkfjladskfj alsdkjf asdljalsdkjf ajlsdkfj asdlkfjadf asjdlkfjad jflkajdfa dflkajdf a sdfljadsf alsdk alskdjflksdjflak a sdlkfjlaks jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk jasjldfkjasd f ald  jalskdjflkasd jaklsdjfkl djfkla df  lkajsdfkl asdjflk" FontSize="22.667" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </controls:PivotItem>-->
+            <!--Pivot item APPS-->
+            <controls:PivotItem Header="apps" VerticalAlignment="Top" VerticalContentAlignment="Top">
+                <ListBox Name="AppsListBox" Margin="12,0,0,0" VerticalContentAlignment="Top" Height="454">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Name="AppsListStackPanel" Orientation="Horizontal" Tap="AppsListStackPanel_Tap">
+                                <Image Source="{Binding Icon}" Width="80" Height="80" />
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="32" />
+                                    <TextBlock Text="{Binding Earning}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                    <TextBlock Text=" " TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>            
+        </controls:Pivot>
+        <my:AdControl AdUnitId="10025396" ApplicationId="9a657926-7a25-40f0-82ef-eab697b53a99" Height="80" Name="adControl" Width="480" VerticalAlignment="Bottom" />
+
+    </Grid>
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appbar_button_RateAndReview" IconUri="/AppInfo/Images/AppbarIcons/Dark/appbar.favs.rest.png" Text="rate" Click="appbar_button_RateAndReview_Click" />
+            <shell:ApplicationBarIconButton x:Name="appbar_button_MarketplaceSearch" IconUri="/AppInfo/Images/AppbarIcons/Dark/appbar.marketplace.png" Text="marketplace" Click="appbar_button_MarketplaceSearch_Click" />
+            <shell:ApplicationBarIconButton x:Name="appbar_button_Share" IconUri="/AppInfo/Images/AppbarIcons/Dark/appbar.share.png" Text="share" Click="appbar_button_Share_Click" />
+            <shell:ApplicationBarIconButton x:Name="appbar_button_ContactUs" IconUri="/AppInfo/Images/AppbarIcons/Dark/appbar.feature.email.rest.png" Text="contact us" Click="appbar_button_ContactUs_Click" />
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

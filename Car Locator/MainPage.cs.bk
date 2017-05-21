@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
+using System.Device.Location;
+using System.Diagnostics;
+using Car_Locator.Database;
+using Microsoft.Phone.Tasks;
+using System.Collections.ObjectModel;
+namespace Car_Locator
+{
+    public partial class MainPage : PhoneApplicationPage
+    {
+        GeoCoordinateWatcher watcher;
+        Boolean addedLocation = false;
+        // Constructor
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            Database_Helper.connect();
+            if (Database_Helper.getUsingRow() == null)
+            {
+                addedLocation = false;
+            }
+            else
+            {
+                addedLocation = true;
+                addcar.Title = "Remove Car Location";
+            }
+
+        }
+        private void Map_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Map.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        private void Add_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            //NavigationService.Navigate(new Uri("/New.xaml", UriKind.RelativeOrAbsolute));
+            if (App.current == null || App.current.Using == false)
+            {
+                AddCarLocation();
+                addedLocation = true;
+                addcar.Title = "Remove Car Location";
+            }
+            else
+            {
+                Database_Helper.connect();
+                App.current = null;
+                Database_Helper.removeUsing();
+            }
+            //AddCarLocation();
+            //Database_Helper.connect();
+            //ObservableCollection<Location_Table> b = Database_Helper.getAllRows();
+            //if (b == null) Debug.WriteLine("sahdashjkdhaskdha;s");
+            //foreach (Location_Table a in b)
+            //{
+            //    Debug.WriteLine(a.getString());
+            //}
+            //Location_Table t =  Database_Helper.getUsingRow();
+            //Debug.WriteLine("usingrow is "+ t.getString());
+        }
+        private void AddCarLocation()
+        {
+            if (watcher == null)
+            {
+                watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High); // using high accuracy
+                watcher.MovementThreshold = 20; // use MovementThreshold to ignore noise in the signal
+                watcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(watcher_StatusChanged);
+                watcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(watcher_PositionChanged);
+            }
+            watcher.Start();
+        }
+        void watcher_StatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
+        {
+            switch (e.Status)
+            {
+                case GeoPositionStatus.Disabled:
+                    // The Location Service is disabled or unsupported.
+                    // Check to see whether the user has disabled the Location Service.
+                    if (watcher.Permission == GeoPositionPermission.Denied)
+                    {
+                        // The user has disabled the Location Service on their device.
+                        Debug.WriteLine("you have this application access to location."); ;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("location is not functioning on this device");
+                    }
+                    break;
+
+                case GeoPositionStatus.Initializing:
+                    // The Location Service is initializing.
+                    // Disable the Start Location button.
+                    //startLocationButton.IsEnabled = false;
+                    break;
+
+                case GeoPositionStatus.NoData:
+                    // The Location Service is working, but it cannot get location data.
+                    // Alert the user and enable the Stop Location button.
+                    Debug.WriteLine("location data is not available.");
+                    //stopLocationButton.IsEnabled = true;
+                    break;
+
+                case GeoPositionStatus.Ready:
+                    // The Location Service is working and is receiving location data.
+                    // Show the current position and enable the Stop Location button.
+                    Debug.WriteLine("location data is available.");
+                    //stopLocationButton.IsEnabled = true;
+                    break;
+            }
+        }
+        void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        {
+            Debug.WriteLine("Lat" + e.Position.Location.Latitude.ToString("0.000"));
+            Debug.WriteLine("Long" + e.Position.Location.Longitude.ToString("0.000"));
+            Location_Table newLocation = new Location_Table();
+            newLocation.latitude = e.Position.Location.Latitude;
+            newLocation.longitude = e.Position.Location.Longitude;
+            newLocation.altitude = e.Position.Location.Altitude;
+            newLocation.course = e.Position.Location.Course;
+            newLocation.Note = "";
+            newLocation.Title = "title";
+            newLocation.Using = true;
+            Database_Helper.connect();
+            Database_Helper.insertRow(newLocation);
+            App.current = newLocation;
+            watcher.Stop();
+
+        }
+
+        private void Direction_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            Debug.WriteLine("wasssup !!!!!!");
+            Database_Helper.connect();
+            Location_Table result = Database_Helper.getUsingRow();
+            Debug.WriteLine("largest id is " + result.Id);
+            BingMapsDirectionsTask bingMapsDirectionsTask = new BingMapsDirectionsTask();
+            GeoCoordinate spaceNeedleLocation = new GeoCoordinate(result.latitude, result.longitude);
+            LabeledMapLocation spaceNeedleLML = new LabeledMapLocation("Space Needle", spaceNeedleLocation);
+            bingMapsDirectionsTask.End = spaceNeedleLML;
+            bingMapsDirectionsTask.Show();
+        }
+
+        private void History_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+
+        }
+    }
+}
