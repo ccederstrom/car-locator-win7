@@ -1,6 +1,8 @@
 # Car locator for Windows Phone 7
 Never forget where you parked your car again! Car Locator will help you remember with notes and find the shortest route to your car.
 
+**Microsoft store:** https://www.microsoft.com/en-us/store/p/car-locator/9nblggh09kvn?rtc=1#
+
 ## Features
 * Augmented reality is helpful to find your car in parking structures
 * Map with turn-by-turn directions
